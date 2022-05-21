@@ -1,14 +1,18 @@
 package com.example.myapplication.ui.movieList
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.databinding.MovieListItemViewBinding
 import com.example.myapplication.model.Movie
+import com.example.myapplication.network.POSTER_PATH
+import kotlinx.coroutines.withContext
 
 typealias WordClickHandler = (Movie) -> Unit
 
@@ -19,7 +23,7 @@ class MovieAdaptor() :
     class ItemHolder(val binding: MovieListItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-
+            Glide.with(itemView).load(POSTER_PATH + movie.poster_path).into(binding.moviePhoto)
 
         }
     }

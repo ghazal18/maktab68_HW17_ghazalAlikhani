@@ -10,4 +10,7 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource) {
     suspend fun searchMovie(query:String): List<Movie> {
         return movieRemoteDataSource.searchMovie(query)
     }
+    suspend fun comingSoonMovie():List<Movie>{
+        return movieRemoteDataSource.comingSoonMovie()
+    }
 }

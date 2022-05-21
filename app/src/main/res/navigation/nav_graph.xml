@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/comingSoonFragment">
 
     <fragment
         android:id="@+id/movieListFragment"
@@ -12,4 +12,8 @@
         android:id="@+id/searchFragment"
         android:name="com.example.myapplication.ui.movieList.SearchFragment"
         android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/comingSoonFragment"
+        android:name="com.example.myapplication.ui.movieList.ComingSoonFragment"
+        android:label="ComingSoonFragment" />
 </navigation>

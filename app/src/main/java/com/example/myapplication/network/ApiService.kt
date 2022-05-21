@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 const val API_KEY = "8615e332ad100989dfaaba4d95fa88c7"
-const val POSTER_PATH ="https://image.tmdb.org/t/p/w500"
+const val POSTER_PATH = "https://image.tmdb.org/t/p/w500"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -26,26 +26,31 @@ private val retrofit = Retrofit.Builder()
 interface ApiService {
     @GET("movie/popular")
     suspend fun getMovies(
-        @Query("api_key") key : String = API_KEY,
-        @Query("page")page : Int = 1
+        @Query("api_key") key: String = API_KEY,
+        @Query("page") page: Int = 1
+    ): MovieListApiResult
+
+    @GET("movie/upcoming")
+    suspend fun comingSoonMovie(
+        @Query("api_key") key: String = API_KEY,
+        @Query("page") page: Int = 1
     ): MovieListApiResult
 
     @GET("search/movie")
     suspend fun searchMovie(
-//        @Query("page")page :Int,
-        @Query("api_key") apiKey :String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("query") query: String
-    ):MovieListApiResult
+    ): MovieListApiResult
 
     @GET("movie/{movie_id}")
     suspend fun movieDetail(
-        @Query("api_key") apiKey :String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Path(value = "movie_id") movieId: Int
     ): Movie
 
 
-
 }
+
 object MovieApi {
     val retrofitService: ApiService by lazy { retrofit.create(ApiService::class.java) }
 }
