@@ -13,11 +13,12 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentComingSoonBinding
 import com.example.myapplication.databinding.FragmentSearchBinding
 import com.example.myapplication.network.POSTER_PATH
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ComingSoonFragment : Fragment() {
 
     lateinit var binding: FragmentComingSoonBinding
-    val viewModel: MovieListViewModel by viewModels()
+    val viewModel: MovieListViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.navArgs
 import at.huber.youtubeExtractor.VideoMeta
 import at.huber.youtubeExtractor.YouTubeExtractor
 import at.huber.youtubeExtractor.YtFile
 import com.example.myapplication.R
+import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.databinding.FragmentDetailsBinding
 import com.example.myapplication.databinding.MovieListItemViewBinding
 import com.google.android.exoplayer2.ExoPlayer
@@ -26,11 +28,13 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DetailsFragment : Fragment() {
     lateinit var binding: FragmentDetailsBinding
-    val viewModel: MovieListViewModel by viewModels()
+    val viewModel: MovieListViewModel by viewModel()
     val args: DetailsFragmentArgs by navArgs()
 
 

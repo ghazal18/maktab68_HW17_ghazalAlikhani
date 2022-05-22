@@ -10,12 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMovieListBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MovieListFragment : Fragment() {
 
     lateinit var binding: FragmentMovieListBinding
-    val viewModel: MovieListViewModel by viewModels()
+    val viewModel: MovieListViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

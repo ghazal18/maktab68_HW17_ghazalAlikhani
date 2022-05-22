@@ -3,11 +3,10 @@ package com.example.myapplication.ui.movieList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.domin.Container
+import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
-
-class MovieListViewModel : ViewModel() {
+class MovieListViewModel (val movieRepository: MovieRepository): ViewModel() {
     val status = MutableLiveData<ApiStatus>()
     val movieList = MutableLiveData<List<Movie>>()
     val comingSoonMovieList = MutableLiveData<List<Movie>>()
@@ -22,7 +21,7 @@ class MovieListViewModel : ViewModel() {
     fun getMovie() {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val list = Container.movieRepository.getMovie()
+            val list = movieRepository.getMovie()
             movieList.value = list
         }
     }
@@ -30,7 +29,7 @@ class MovieListViewModel : ViewModel() {
     fun searchMovie(query: String) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val list = Container.movieRepository.searchMovie(query)
+            val list = movieRepository.searchMovie(query)
             searchMovieList.value = list
         }
     }
@@ -38,7 +37,7 @@ class MovieListViewModel : ViewModel() {
     fun comingSoonMovie() {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val list = Container.movieRepository.comingSoonMovie()
+            val list = movieRepository.comingSoonMovie()
             comingSoonMovieList.value = list
         }
     }
@@ -53,14 +52,18 @@ class MovieListViewModel : ViewModel() {
     fun movieDetail(id: Int) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val movie = Container.movieRepository.movieDetail(id)
-            movieLiveData.value = movie
+            try {
+                val movie = movieRepository.movieDetail(id)
+                movieLiveData.value = movie
+            } catch (e: Exception) {
+
+            }
         }
     }
-}
 
-enum class ApiStatus {
-    Loading,
-    Done,
-    Error
+    enum class ApiStatus {
+        Loading,
+        Done,
+        Error
+    }
 }

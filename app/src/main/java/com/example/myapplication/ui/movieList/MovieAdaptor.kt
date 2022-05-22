@@ -30,7 +30,6 @@ class MovieAdaptor(val onClick: MovieClickHandler) :
             binding.linear.setOnClickListener {
                 onClick.invoke(movie)
             }
-
         }
     }
 
@@ -42,7 +41,6 @@ class MovieAdaptor(val onClick: MovieClickHandler) :
             parent, false
         )
         return ItemHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {

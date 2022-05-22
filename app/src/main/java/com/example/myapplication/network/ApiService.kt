@@ -15,14 +15,8 @@ private const val BASE_URL = "https://api.themoviedb.org/3/"
 const val API_KEY = "8615e332ad100989dfaaba4d95fa88c7"
 const val POSTER_PATH = "https://image.tmdb.org/t/p/w500"
 
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
-    .build()
+
 
 interface ApiService {
     @GET("movie/popular")
@@ -58,6 +52,3 @@ interface ApiService {
 
 }
 
-object MovieApi {
-    val retrofitService: ApiService by lazy { retrofit.create(ApiService::class.java) }
-}
