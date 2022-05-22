@@ -14,16 +14,19 @@ import com.example.myapplication.model.Movie
 import com.example.myapplication.network.POSTER_PATH
 import kotlinx.coroutines.withContext
 
-typealias WordClickHandler = (Movie) -> Unit
+typealias MovieClickHandler = (Movie) -> Unit
 
 
-class MovieAdaptor() :
+class MovieAdaptor(val onClick: MovieClickHandler) :
     ListAdapter<Movie, MovieAdaptor.ItemHolder>(MovieDiffCallback) {
 
     class ItemHolder(val binding: MovieListItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: Movie, onClick: MovieClickHandler) {
             Glide.with(itemView).load(POSTER_PATH + movie.poster_path).into(binding.moviePhoto)
+            binding.linear.setOnClickListener {
+                onClick.invoke(movie)
+            }
 
         }
     }
@@ -42,7 +45,7 @@ class MovieAdaptor() :
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val movie = getItem(position)
         holder.binding.movie = movie
-        holder.bind(movie)
+        holder.bind(movie,onClick)
     }
 }
 

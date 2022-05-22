@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentComingSoonBinding
@@ -36,7 +37,9 @@ class ComingSoonFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor()
+        val adapter = MovieAdaptor(){ movie ->
+
+        }
         viewModel.comingSoonMovieList.observe(viewLifecycleOwner) {
             binding.movieRecyclerView.adapter = adapter
             adapter.submitList(it)

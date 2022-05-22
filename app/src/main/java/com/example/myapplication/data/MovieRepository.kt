@@ -13,4 +13,10 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource) {
     suspend fun comingSoonMovie():List<Movie>{
         return movieRemoteDataSource.comingSoonMovie()
     }
+    suspend fun movieDetail(movieId: Int):Movie{
+        return movieRemoteDataSource.movieDetail(movieId)
+    }
+    suspend fun getVideo(movieId: Int):List<Result>{
+        return movieRemoteDataSource.getVideo(movieId)
+    }
 }

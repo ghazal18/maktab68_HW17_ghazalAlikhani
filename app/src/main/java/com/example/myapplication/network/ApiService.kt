@@ -1,5 +1,6 @@
 package com.example.myapplication.network
 
+import com.example.myapplication.data.Video
 import com.example.myapplication.model.Movie
 import com.example.myapplication.model.MovieListApiResult
 import com.squareup.moshi.Moshi
@@ -44,9 +45,15 @@ interface ApiService {
 
     @GET("movie/{movie_id}")
     suspend fun movieDetail(
-        @Query("api_key") apiKey: String = API_KEY,
-        @Path(value = "movie_id") movieId: Int
+        @Path(value = "movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
     ): Movie
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideo(
+        @Path(value = "movie_id")movieId:Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Video
 
 
 }

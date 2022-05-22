@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMovieListBinding
 
@@ -34,7 +35,10 @@ class MovieListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor()
+        val adapter = MovieAdaptor(){movie->
+            val action = MovieListFragmentDirections.actionMovieListFragmentToDetailsFragment(movie)
+            findNavController().navigate(action)
+        }
         viewModel.movieList.observe(viewLifecycleOwner) {
             binding.movieRecyclerView.adapter = adapter
             adapter.submitList(it)

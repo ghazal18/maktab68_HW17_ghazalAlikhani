@@ -35,7 +35,9 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor()
+        val adapter = MovieAdaptor(){
+
+        }
         binding.searchButton.setOnClickListener {
             viewModel.searchMovie(binding.searchEditText.text.toString())
             viewModel.searchMovieList.observe(viewLifecycleOwner) {
