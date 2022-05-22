@@ -20,9 +20,12 @@ typealias MovieClickHandler = (Movie) -> Unit
 class MovieAdaptor(val onClick: MovieClickHandler) :
     ListAdapter<Movie, MovieAdaptor.ItemHolder>(MovieDiffCallback) {
 
-    class ItemHolder(val binding: MovieListItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ItemHolder(val binding: MovieListItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie, onClick: MovieClickHandler) {
+            val parts = movie.release_date.split("-")
+            binding.datetv.text = parts[0]
             Glide.with(itemView).load(POSTER_PATH + movie.poster_path).into(binding.moviePhoto)
             binding.linear.setOnClickListener {
                 onClick.invoke(movie)
@@ -36,7 +39,7 @@ class MovieAdaptor(val onClick: MovieClickHandler) :
         val binding: MovieListItemViewBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.movie_list_item_view,
-            parent,false
+            parent, false
         )
         return ItemHolder(binding)
 
@@ -45,7 +48,7 @@ class MovieAdaptor(val onClick: MovieClickHandler) :
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val movie = getItem(position)
         holder.binding.movie = movie
-        holder.bind(movie,onClick)
+        holder.bind(movie, onClick)
     }
 }
 

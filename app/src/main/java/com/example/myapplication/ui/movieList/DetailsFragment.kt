@@ -60,6 +60,8 @@ class DetailsFragment : Fragment() {
 
 
 
+
+
     }
 
 /*    //https://www.youtube.com/watch?v=5e6x3JGSrvU
