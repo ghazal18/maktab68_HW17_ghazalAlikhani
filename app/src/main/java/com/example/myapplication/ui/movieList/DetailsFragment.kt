@@ -15,10 +15,12 @@ import androidx.navigation.fragment.navArgs
 import at.huber.youtubeExtractor.VideoMeta
 import at.huber.youtubeExtractor.YouTubeExtractor
 import at.huber.youtubeExtractor.YtFile
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.databinding.FragmentDetailsBinding
 import com.example.myapplication.databinding.MovieListItemViewBinding
+import com.example.myapplication.network.POSTER_PATH
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -61,6 +63,8 @@ class DetailsFragment : Fragment() {
 
         val movie = args.movie
         viewModel.movieDetail(movie.id)
+        Glide.with(this).load(POSTER_PATH + movie.backdrop_path).into(binding.backdropImageView)
+        Glide.with(this).load(POSTER_PATH + movie.poster_path).into(binding.coverImageView)
 
 
 

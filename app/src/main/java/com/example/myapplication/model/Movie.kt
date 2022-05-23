@@ -14,6 +14,7 @@ data class Movie(
     val id: Int,
     val original_language: String,
     val original_title: String,
+    val backdrop_path: String,
     val overview: String,
     val popularity: Double,
     val poster_path: String,
