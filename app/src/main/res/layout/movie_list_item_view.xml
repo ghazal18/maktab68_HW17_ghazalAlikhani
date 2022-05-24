@@ -54,13 +54,13 @@
                 <RatingBar
                     android:id="@+id/rBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:numStars="5"
-                    android:stepSize="0.5"
-                    android:autofillHints="3"
+                    android:layout_height="wrap_content"
                     android:isIndicator="true"
+                    android:numStars="5"
                     android:rating="2"
-                    android:theme="@style/Widget.AppCompat.RatingBar" />
+                    android:stepSize="0.5"
+                    style="@android:style/Widget.Material.RatingBar.Small"/>
+<!--                    android:theme="@style/Widget.AppCompat.RatingBar" />-->
 
             </LinearLayout>
         </LinearLayout>
