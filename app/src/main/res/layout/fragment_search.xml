@@ -18,11 +18,18 @@
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/searchButton"/>
+            android:hint="Search"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/rounded_corner" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movieRecyclerView"

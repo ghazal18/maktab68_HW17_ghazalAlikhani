@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,38 +8,44 @@
             type="com.example.myapplication.model.Movie" />
     </data>
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linear"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="8dp"
-        android:orientation="horizontal">
+        card_view:cardCornerRadius="28dp"
+        android:layout_height="150dp">
 
-        <ImageView
-            android:id="@+id/moviePhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
 
         <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="@{movie.title}"
-                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/moviePhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
-            <TextView
-                android:id="@+id/datetv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp" />
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="@{movie.title}"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/datetv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
