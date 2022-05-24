@@ -6,7 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
-class MovieListViewModel (val movieRepository: MovieRepository): ViewModel() {
+
+class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
     val status = MutableLiveData<ApiStatus>()
     val movieList = MutableLiveData<List<Movie>>()
     val comingSoonMovieList = MutableLiveData<List<Movie>>()
@@ -21,16 +22,29 @@ class MovieListViewModel (val movieRepository: MovieRepository): ViewModel() {
     fun getMovie() {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val list = movieRepository.getMovie()
-            movieList.value = list
+            try {
+                val list = movieRepository.getMovie()
+                movieList.value = list
+            } catch (e: Exception) {
+                val list =
+                    listOf(Movie(false, 0, "", "", "", "", 0.0, "", "", "", false, 0.0, 0))
+                movieList.value = list
+            }
+
         }
     }
 
     fun searchMovie(query: String) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-            val list = movieRepository.searchMovie(query)
-            searchMovieList.value = list
+            try {
+                val list = movieRepository.searchMovie(query)
+                searchMovieList.value = list
+            } catch (e: Exception) {
+                val list =
+                    listOf(Movie(false, 0, "", "", "", "", 0.0, "", "", "", false, 0.0, 0))
+                movieList.value = list
+            }
         }
     }
 

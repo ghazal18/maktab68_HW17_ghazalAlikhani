@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.movieList
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,13 +43,23 @@ class SearchFragment : Fragment() {
             val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(movie)
             findNavController().navigate(action)
         }
-        binding.searchButton.setOnClickListener {
-            viewModel.searchMovie(binding.searchEditText.text.toString())
-            viewModel.searchMovieList.observe(viewLifecycleOwner) {
-                binding.movieRecyclerView.adapter = adapter
-                adapter.submitList(it)
+
+
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
             }
-        }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.searchMovie(binding.searchEditText.text.toString())
+                viewModel.searchMovieList.observe(viewLifecycleOwner) {
+                    binding.movieRecyclerView.adapter = adapter
+                    adapter.submitList(it)
+                }
+            }
+        })
     }
 
 
