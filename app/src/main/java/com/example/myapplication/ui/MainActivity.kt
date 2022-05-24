@@ -22,21 +22,14 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
+
         when (item.itemId) {
-            R.id.comingSoonFragment -> {
-                navController.navigate(R.id.comingSoonFragment)
-                return true
-            }
-            R.id.movieListFragment -> {
-                navController.navigate(R.id.movieListFragment)
-                return true
-            }
-            R.id.searchFragment -> {
-                navController.navigate(R.id.searchFragment)
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
+            R.id.comingSoonFragment -> navController.navigate(R.id.comingSoonFragment)
+            R.id.movieListFragment -> navController.navigate(R.id.movieListFragment)
+            R.id.searchFragment -> navController.navigate(R.id.searchFragment)
         }
+
+        return super.onOptionsItemSelected(item)
 
     }
 }

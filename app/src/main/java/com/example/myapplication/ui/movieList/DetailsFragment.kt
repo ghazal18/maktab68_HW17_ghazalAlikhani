@@ -40,7 +40,6 @@ class DetailsFragment : Fragment() {
     val args: DetailsFragmentArgs by navArgs()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -63,11 +62,12 @@ class DetailsFragment : Fragment() {
 
         val movie = args.movie
         viewModel.movieDetail(movie.id)
-        Glide.with(this).load(POSTER_PATH + movie.backdrop_path).into(binding.backdropImageView)
+        try {
+            Glide.with(this).load(POSTER_PATH + movie.backdrop_path).into(binding.backdropImageView)
+        } catch (e: Exception) {
+            Glide.with(this).load(R.drawable.ic_broken_image).into(binding.backdropImageView)
+        }
         Glide.with(this).load(POSTER_PATH + movie.poster_path).into(binding.coverImageView)
-
-
-
 
 
     }

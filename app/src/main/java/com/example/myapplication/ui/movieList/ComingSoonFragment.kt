@@ -38,17 +38,15 @@ class ComingSoonFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor(){ movie ->
-
+        val adapter = MovieAdaptor() { movie ->
+            val action = ComingSoonFragmentDirections.actionComingSoonFragmentToDetailsFragment(movie)
+            findNavController().navigate(action)
         }
         viewModel.comingSoonMovieList.observe(viewLifecycleOwner) {
             binding.movieRecyclerView.adapter = adapter
             adapter.submitList(it)
-
-
         }
     }
-
 
 
 }

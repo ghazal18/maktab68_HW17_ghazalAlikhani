@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor(){movie->
+        val adapter = MovieAdaptor(){movie ->
             val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(movie)
             findNavController().navigate(action)
         }

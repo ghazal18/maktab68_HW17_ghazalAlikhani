@@ -10,11 +10,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Movie(
+    val adult: Boolean,
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val original_language: String,
     val original_title: String,
-    val backdrop_path: String,
+    val backdrop_path: String?,
     val overview: String,
     val popularity: Double,
     val poster_path: String,
@@ -24,5 +25,5 @@ data class Movie(
     val vote_average: Double,
     val vote_count: Int
 
-    ):Parcelable
+) : Parcelable
 
