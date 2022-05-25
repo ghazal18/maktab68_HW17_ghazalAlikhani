@@ -11,10 +11,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        card_view:cardCornerRadius="28dp"
-        card_view:cardElevation="14dp"
+        android:layout_height="150dp"
         android:layout_margin="8dp"
-        android:layout_height="150dp">
+        card_view:cardCornerRadius="28dp"
+        card_view:cardElevation="14dp">
 
 
         <LinearLayout
@@ -28,8 +28,8 @@
             <ImageView
                 android:id="@+id/moviePhoto"
                 android:layout_width="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp" />
 
             <LinearLayout
                 android:layout_width="300dp"
@@ -39,29 +39,47 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
                     android:text="@{movie.title}"
-                    android:textSize="18sp" />
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/datetv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"/>
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"/>
 
-                <RatingBar
-                    android:id="@+id/rBar"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:isIndicator="true"
-                    android:numStars="5"
-                    android:rating="2"
-                    android:stepSize="0.5"
-                    style="@android:style/Widget.Material.RatingBar.Small"/>
-<!--                    android:theme="@style/Widget.AppCompat.RatingBar" />-->
+                    android:orientation="horizontal">
 
+
+                    <RatingBar
+                        android:id="@+id/rBar"
+                        style="@android:style/Widget.Material.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginTop="8dp"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:stepSize="0.1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/darkGray"
+                        android:text="@{String.valueOf(movie.vote_average)}" />
+
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

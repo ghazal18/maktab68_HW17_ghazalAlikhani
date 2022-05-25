@@ -27,6 +27,8 @@ class MovieAdaptor(val onClick: MovieClickHandler) :
             val parts = movie.release_date.split("-")
             binding.datetv.text = parts[0]
             Glide.with(itemView).load(POSTER_PATH + movie.poster_path).into(binding.moviePhoto)
+            var numberOfStars = movie.vote_average / 2
+            binding.rBar.rating = numberOfStars.toFloat()
             binding.linear.setOnClickListener {
                 onClick.invoke(movie)
             }
