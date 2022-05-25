@@ -1,6 +1,6 @@
 package com.example.myapplication.data
 
-data class Result(
+data class ResultVideo(
     val id: String,
     val iso_3166_1: String,
     val iso_639_1: String,

@@ -21,6 +21,7 @@ import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.databinding.FragmentDetailsBinding
 import com.example.myapplication.databinding.MovieListItemViewBinding
 import com.example.myapplication.network.POSTER_PATH
+import com.example.myapplication.network.YOUTUBE_URL
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -68,6 +69,10 @@ class DetailsFragment : Fragment() {
             Glide.with(this).load(R.drawable.ic_broken_image).into(binding.backdropImageView)
         }
         Glide.with(this).load(POSTER_PATH + movie.poster_path).into(binding.coverImageView)
+        viewModel.video(movie.id)
+        viewModel.videoList.observe(viewLifecycleOwner) {
+            binding.textViewLink.text = "$YOUTUBE_URL${it[0].key}"
+        }
 
 
     }

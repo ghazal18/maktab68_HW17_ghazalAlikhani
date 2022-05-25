@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.MovieRepository
+import com.example.myapplication.data.ResultVideo
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
 
@@ -13,6 +14,8 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
     val comingSoonMovieList = MutableLiveData<List<Movie>>()
     val searchMovieList = MutableLiveData<List<Movie>>()
     val movieLiveData = MutableLiveData<Movie>()
+    val videoList = MutableLiveData<List<ResultVideo>>()
+
 
     init {
         getMovie()
@@ -56,10 +59,11 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         }
     }
 
-    fun video() {
+    fun video(id:Int) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
-
+            movieRepository.getVideo(id)
+            videoList.value = movieRepository.getVideo(id)
         }
     }
 

@@ -21,7 +21,7 @@ class MovieRemoteDataSource(val apiService: ApiService) {
         return apiService.movieDetail(movieId = movieId)
     }
 
-    suspend fun getVideo(movieId: Int): List<Result> {
+    suspend fun getVideo(movieId: Int): List<ResultVideo> {
         return apiService.getVideo(movieId = movieId).results
     }
 
