@@ -36,4 +36,5 @@
             android:name="movie"
             app:argType="com.example.myapplication.model.Movie" />
     </fragment>
+
 </navigation>
