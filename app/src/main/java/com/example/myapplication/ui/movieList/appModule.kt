@@ -3,10 +3,13 @@ package com.example.myapplication.ui.movieList
 import com.example.myapplication.data.MovieLocalDataSource
 import com.example.myapplication.data.MovieRemoteDataSource
 import com.example.myapplication.data.MovieRepository
+import com.example.myapplication.data.dataBase.MYDataBase
+import com.example.myapplication.data.dataBase.MYDataBase.Companion.getAppDataBase
 import com.example.myapplication.network.ApiService
 import com.example.myapplication.ui.movieList.MovieListViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,7 +19,7 @@ val appModule = module {
 
     single { MovieRepository(get(), get()) }
 
-    single { MovieLocalDataSource() }
+    single { MovieLocalDataSource(get()) }
 
     single { MovieRemoteDataSource(get()) }
 
@@ -40,5 +43,7 @@ val appModule = module {
     viewModel {
         MovieListViewModel(get())
     }
+    single { MYDataBase.getAppDataBase(androidContext()) }
+    single { get<MYDataBase>().movieDao() }
 
 }

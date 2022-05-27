@@ -1,5 +1,12 @@
 package com.example.myapplication.ui.movieList
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +14,8 @@ import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.data.ResultVideo
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
+import java.io.IOException
+
 
 class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
     val status = MutableLiveData<ApiStatus>()
@@ -20,6 +29,17 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
     init {
         getMovie()
         comingSoonMovie()
+        setInformation()
+    }
+
+    fun setInformation() {
+        viewModelScope.launch {
+            if (isNetworkAvailable1()) {
+                movieRepository.setMovie()
+            } else {
+                movieRepository.getMovieFromDb()
+            }
+        }
     }
 
     fun getMovie() {
@@ -59,7 +79,7 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         }
     }
 
-    fun video(id:Int) {
+    fun video(id: Int) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
             movieRepository.getVideo(id)
@@ -84,4 +104,20 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         Done,
         Error
     }
+
+    fun isNetworkAvailable1(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+
 }

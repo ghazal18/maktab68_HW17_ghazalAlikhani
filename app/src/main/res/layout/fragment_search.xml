@@ -15,6 +15,7 @@
         android:orientation="vertical"
         tools:context=".ui.movieList.SearchFragment">
 
+
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"

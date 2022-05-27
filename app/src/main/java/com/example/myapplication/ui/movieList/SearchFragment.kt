@@ -44,7 +44,6 @@ class SearchFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-
         binding.movieRecyclerView.adapter = adapter
         viewModel.searchMovieList.observe(viewLifecycleOwner) {
             if (it != null) {

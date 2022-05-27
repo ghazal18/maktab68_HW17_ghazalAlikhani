@@ -15,10 +15,8 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg movie: Movie)
 
-    @Query("SELECT COUNT(*) FROM Movie")
-    fun getCount(): LiveData<Int>
-
     @Query("SELECT * FROM Movie")
     fun getAll(): LiveData<List<Movie>>
+
 
 }

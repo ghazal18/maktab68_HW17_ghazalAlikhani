@@ -1,9 +1,13 @@
 package com.example.myapplication.data
 
+import androidx.lifecycle.LiveData
 import com.example.myapplication.data.dataBase.MovieDao
 import com.example.myapplication.model.Movie
+import kotlin.properties.Delegates
 
 class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movieLocalDataSource: MovieLocalDataSource) {
+
+
     suspend fun getMovie(): List<Movie> {
         return movieRemoteDataSource.getMovie()
     }
@@ -26,7 +30,12 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
 
     suspend fun setMovie() {
         for (i in movieRemoteDataSource.getMovie()) {
-       //     movieDao.insert(i)
+            movieLocalDataSource.setMovie(i)
         }
     }
+
+    fun getMovieFromDb():LiveData<List<Movie>>{
+        return movieLocalDataSource.getMovieFromDB()
+    }
+
 }
