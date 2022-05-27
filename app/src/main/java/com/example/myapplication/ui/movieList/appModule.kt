@@ -1,4 +1,4 @@
-package com.example.myapplication.di
+package com.example.myapplication.ui.movieList
 
 import com.example.myapplication.data.MovieLocalDataSource
 import com.example.myapplication.data.MovieRemoteDataSource

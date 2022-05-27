@@ -39,12 +39,18 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = MovieAdaptor(){movie ->
+        val adapter = MovieAdaptor() { movie ->
             val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(movie)
             findNavController().navigate(action)
         }
 
 
+        binding.movieRecyclerView.adapter = adapter
+        viewModel.searchMovieList.observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapter.submitList(it)
+            }
+        }
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -54,10 +60,6 @@ class SearchFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.searchMovie(binding.searchEditText.text.toString())
-                viewModel.searchMovieList.observe(viewLifecycleOwner) {
-                    binding.movieRecyclerView.adapter = adapter
-                    adapter.submitList(it)
-                }
             }
         })
     }
