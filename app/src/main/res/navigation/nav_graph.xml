@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/movieListFragment">
 
     <fragment
         android:id="@+id/movieListFragment"
@@ -36,5 +36,9 @@
             android:name="movie"
             app:argType="com.example.myapplication.model.Movie" />
     </fragment>
+    <fragment
+        android:id="@+id/dataBaseFragment"
+        android:name="com.example.myapplication.ui.movieList.DataBaseFragment"
+        android:label="DataBaseFragment" />
 
 </navigation>

@@ -16,7 +16,7 @@ interface MovieDao {
     fun insertAll(vararg movie: Movie)
 
     @Query("SELECT * FROM Movie")
-    fun getAll(): LiveData<List<Movie>>
+    suspend fun getAll(): List<Movie>
 
 
 }

@@ -8,7 +8,7 @@ class MovieLocalDataSource(val movieDao: MovieDao) {
     suspend fun setMovie(movie: Movie) {
         movieDao.insert(movie)
     }
-    fun getMovieFromDB():LiveData<List<Movie>>{
+    suspend fun getMovieFromDB(): List<Movie> {
         return movieDao.getAll()
     }
 

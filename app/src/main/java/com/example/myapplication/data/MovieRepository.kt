@@ -34,7 +34,7 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
         }
     }
 
-    fun getMovieFromDb():LiveData<List<Movie>>{
+    suspend fun getMovieFromDb(): List<Movie> {
         return movieLocalDataSource.getMovieFromDB()
     }
 

@@ -1,23 +1,26 @@
 package com.example.myapplication.ui.movieList
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.data.ResultVideo
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.net.SocketTimeoutException
 
 
 class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
+
+
+    // private val context = getApplication<Application>().applicationContext
     val status = MutableLiveData<ApiStatus>()
     val movieList = MutableLiveData<List<Movie>>()
     val comingSoonMovieList = MutableLiveData<List<Movie>>()
@@ -27,18 +30,49 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
 
 
     init {
-        getMovie()
-        comingSoonMovie()
+        //getMovieFromDB()
+        //getMovie()
+       // comingSoonMovie()
+        //setInformation()
         setInformation()
+        setMovieInforamtion()
+    }
+
+    fun getMovieFromDB() {
+        viewModelScope.launch {
+            val list = movieRepository.getMovieFromDb()
+            movieList.value = list
+        }
     }
 
     fun setInformation() {
         viewModelScope.launch {
-            if (isNetworkAvailable1()) {
+            try {
                 movieRepository.setMovie()
-            } else {
+            } catch (e: Exception) {
                 movieRepository.getMovieFromDb()
             }
+        }
+    }
+
+    fun setMovieInforamtion() {
+        viewModelScope.launch {
+            try {
+                val list = movieRepository.getMovie()
+                movieList.value = list
+            } catch (e: Exception) {
+                val list = movieRepository.getMovieFromDb()
+                movieList.value = list
+            }
+        }
+    }
+
+
+    fun comingSoonMovie() {
+        status.value = ApiStatus.Loading
+        viewModelScope.launch {
+            val list = movieRepository.comingSoonMovie()
+            comingSoonMovieList.value = list
         }
     }
 
@@ -48,9 +82,8 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
             try {
                 val list = movieRepository.getMovie()
                 movieList.value = list
-            } catch (e: Exception) {
-                val list =
-                    listOf(Movie(false, 0, "", "", "", "", 0.0, "", "", "", false, 0.0, 0))
+            } catch (e: SocketTimeoutException) {
+                val list = movieRepository.getMovieFromDb()
                 movieList.value = list
             }
 
@@ -68,14 +101,6 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
                     listOf(Movie(false, 0, "", "", "", "", 0.0, "", "", "", false, 0.0, 0))
                 movieList.value = list
             }
-        }
-    }
-
-    fun comingSoonMovie() {
-        status.value = ApiStatus.Loading
-        viewModelScope.launch {
-            val list = movieRepository.comingSoonMovie()
-            comingSoonMovieList.value = list
         }
     }
 
@@ -105,19 +130,28 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         Error
     }
 
-    fun isNetworkAvailable1(): Boolean {
-        val runtime = Runtime.getRuntime()
-        try {
-            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
-            val exitValue = ipProcess.waitFor()
-            return exitValue == 0
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        return false
-    }
-
+//    private fun checkForInternet(context: Context): Boolean {
+//
+//        val connectivityManager =
+//            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//
+//            val network = connectivityManager.activeNetwork ?: return false
+//
+//            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+//
+//            return when {
+//                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+//                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+//                else -> false
+//            }
+//        } else {
+//            @Suppress("DEPRECATION") val networkInfo =
+//                connectivityManager.activeNetworkInfo ?: return false
+//            @Suppress("DEPRECATION")
+//            return networkInfo.isConnected
+//        }
+//    }
 
 }
