@@ -37,5 +37,14 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
     suspend fun getMovieFromDb(): List<Movie> {
         return movieLocalDataSource.getMovieFromDB()
     }
+    suspend fun setComingSoonMovie() {
+        for (i in movieRemoteDataSource.comingSoonMovie()) {
+            movieLocalDataSource.setComingSoonMovie(i)
+        }
+    }
+
+    suspend fun getComingSoonMovieFromDb(): List<Movie> {
+        return movieLocalDataSource.getComingSoonMovieFromDB()
+    }
 
 }

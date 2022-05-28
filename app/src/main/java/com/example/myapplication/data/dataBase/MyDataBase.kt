@@ -9,6 +9,7 @@ import com.example.myapplication.model.Movie
 @Database(entities = [Movie::class], version = 1)
 abstract class MYDataBase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
+    abstract fun movieComingSoonDao(): ComingSoonDao
     companion object {
         var INSTANCE: MYDataBase? = null
 

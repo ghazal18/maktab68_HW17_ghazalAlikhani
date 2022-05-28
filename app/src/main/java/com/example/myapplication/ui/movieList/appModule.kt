@@ -20,7 +20,7 @@ val appModule = module {
 
     single { MovieRepository(get(), get()) }
 
-    single { MovieLocalDataSource(get()) }
+    single { MovieLocalDataSource(get(),get()) }
 
     single { MovieRemoteDataSource(get()) }
 
@@ -46,5 +46,6 @@ val appModule = module {
     }
     single { MYDataBase.getAppDataBase(androidContext()) }
     single { get<MYDataBase>().movieDao() }
+    single { get<MYDataBase>().movieComingSoonDao() }
 
 }

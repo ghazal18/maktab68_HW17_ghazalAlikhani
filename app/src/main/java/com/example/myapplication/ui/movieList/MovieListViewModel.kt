@@ -36,6 +36,8 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         //setInformation()
         setInformation()
         setMovieInforamtion()
+        setComingSoonInformation()
+        setComingSoonMovieInforamtion()
     }
 
     fun getMovieFromDB() {
@@ -66,7 +68,26 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
             }
         }
     }
-
+    fun setComingSoonInformation() {
+        viewModelScope.launch {
+            try {
+                movieRepository.setComingSoonMovie()
+            } catch (e: Exception) {
+                movieRepository.getComingSoonMovieFromDb()
+            }
+        }
+    }
+    fun setComingSoonMovieInforamtion() {
+        viewModelScope.launch {
+            try {
+                val list = movieRepository.comingSoonMovie()
+                comingSoonMovieList.value = list
+            } catch (e: Exception) {
+                val list = movieRepository.getComingSoonMovieFromDb()
+                comingSoonMovieList.value = list
+            }
+        }
+    }
 
     fun comingSoonMovie() {
         status.value = ApiStatus.Loading
