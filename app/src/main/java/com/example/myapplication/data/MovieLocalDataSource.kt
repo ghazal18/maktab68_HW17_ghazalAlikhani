@@ -1,10 +1,10 @@
 package com.example.myapplication.data
 
-import com.example.myapplication.data.ComingSoonDataBase.ComingSoonDao
 import com.example.myapplication.data.dataBase.MovieDao
+import com.example.myapplication.data.dataBase.VideoDao
 import com.example.myapplication.model.Movie
 
-class MovieLocalDataSource(val movieDao: MovieDao) {
+class MovieLocalDataSource(val movieDao: MovieDao,val videoDao: VideoDao) {
     suspend fun setMovie(movie: Movie) {
         movieDao.insert(movie)
     }
@@ -22,6 +22,12 @@ class MovieLocalDataSource(val movieDao: MovieDao) {
     }
     suspend fun getDetail(id :Int):Movie{
         return movieDao.getDetail(id)
+    }
+    suspend fun setVideo(video: ResultVideo) {
+        videoDao.insert(video)
+    }
+    suspend fun getVideo(id: Int): List<ResultVideo>{
+       return videoDao.getVideo(id)
     }
 
 

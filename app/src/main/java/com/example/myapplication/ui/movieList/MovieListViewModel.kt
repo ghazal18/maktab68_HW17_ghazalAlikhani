@@ -23,14 +23,9 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         setMovieInforamtion()
         setComingSoonInformation()
         setComingSoonMovieInforamtion()
+        setVideo()
     }
 
-    fun getMovieFromDB() {
-        viewModelScope.launch {
-            val list = movieRepository.getMovieFromDb()
-            movieList.value = list
-        }
-    }
 
     fun setInformation() {
         viewModelScope.launch {
@@ -75,26 +70,24 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
             }
         }
     }
-
-    fun comingSoonMovie() {
-        status.value = ApiStatus.Loading
-        viewModelScope.launch {
-            val list = movieRepository.comingSoonMovie()
-            comingSoonMovieList.value = list
-        }
-    }
-
-    fun getMovie() {
-        status.value = ApiStatus.Loading
+    fun setVideo(){
         viewModelScope.launch {
             try {
-                val list = movieRepository.getMovie()
-                movieList.value = list
-            } catch (e: SocketTimeoutException) {
-                val list = movieRepository.getMovieFromDb()
-                movieList.value = list
+                movieRepository.setMovie()
+            } catch (e: Exception) {
+                movieRepository.getMovieFromDb()
             }
-
+        }
+    }
+    fun setVideoInforamtion(id:Int) {
+        viewModelScope.launch {
+            try {
+                val list = movieRepository.getVideo(id)
+                videoList.value = list
+            } catch (e: Exception) {
+                val list = listOf<ResultVideo>(ResultVideo("","","","","",false,"","",0,""))
+                videoList.value = list
+            }
         }
     }
 
@@ -126,6 +119,7 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
     fun video(id: Int) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
+
             movieRepository.getVideo(id)
             videoList.value = movieRepository.getVideo(id)
         }

@@ -1,14 +1,10 @@
 package com.example.myapplication.ui.movieList
 
-import android.app.Application
-import com.example.myapplication.data.ComingSoonDataBase.ComingSoonDataBase
 import com.example.myapplication.data.MovieLocalDataSource
 import com.example.myapplication.data.MovieRemoteDataSource
 import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.data.dataBase.MYDataBase
-import com.example.myapplication.data.dataBase.MYDataBase.Companion.getAppDataBase
 import com.example.myapplication.network.ApiService
-import com.example.myapplication.ui.movieList.MovieListViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +17,7 @@ val appModule = module {
 
     single { MovieRepository(get(), get()) }
 
-    single { MovieLocalDataSource(get()) }
+    single { MovieLocalDataSource(get(),get()) }
 
     single { MovieRemoteDataSource(get()) }
 
@@ -51,7 +47,7 @@ val appModule = module {
 
     single { MYDataBase.getAppDataBase(androidContext()) }
     single { get<MYDataBase>().movieDao() }
-    single { ComingSoonDataBase.getAppDataBase(androidContext()) }
-    single { get<ComingSoonDataBase>().comingSoonDao() }
+    single { get<MYDataBase>().videoDao() }
+
 
 }

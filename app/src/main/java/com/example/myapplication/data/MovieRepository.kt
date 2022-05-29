@@ -34,6 +34,13 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
             movieLocalDataSource.setMovie(i)
         }
     }
+    suspend fun setVideo(){
+        for (i in movieRemoteDataSource.getMovie()){
+            for (x in movieRemoteDataSource.getVideo(i.id)){
+                movieLocalDataSource.setVideo(x)
+            }
+        }
+    }
 
     suspend fun getMovieFromDb(): List<Movie> {
         return movieLocalDataSource.getMovieFromDB()
@@ -55,7 +62,9 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
     suspend fun getDetail(id :Int):Movie{
         return movieLocalDataSource.getDetail(id)
     }
-
+    suspend fun getVideoo(id: Int): List<ResultVideo>{
+        return movieLocalDataSource.getVideo(id)
+    }
 
 
 }
