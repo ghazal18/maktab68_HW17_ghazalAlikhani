@@ -30,6 +30,7 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
 
     suspend fun setMovie() {
         for (i in movieRemoteDataSource.getMovie()) {
+            i.Classification = "Popular"
             movieLocalDataSource.setMovie(i)
         }
     }
@@ -39,6 +40,7 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
     }
     suspend fun setComingSoonMovie() {
         for (i in movieRemoteDataSource.comingSoonMovie()) {
+            i.Classification = "ComingSoon"
             movieLocalDataSource.setComingSoonMovie(i)
         }
     }
@@ -46,5 +48,14 @@ class MovieRepository(val movieRemoteDataSource: MovieRemoteDataSource, val movi
     suspend fun getComingSoonMovieFromDb(): List<Movie> {
         return movieLocalDataSource.getComingSoonMovieFromDB()
     }
+
+    suspend fun searchMovieFromDB(title:String): Movie? {
+        return movieLocalDataSource.searchMovie(title)
+    }
+    suspend fun getDetail(id :Int):Movie{
+        return movieLocalDataSource.getDetail(id)
+    }
+
+
 
 }

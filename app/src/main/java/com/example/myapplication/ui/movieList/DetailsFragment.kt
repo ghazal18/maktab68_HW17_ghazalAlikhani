@@ -69,10 +69,10 @@ class DetailsFragment : Fragment() {
             Glide.with(this).load(R.drawable.ic_broken_image).into(binding.backdropImageView)
         }
         Glide.with(this).load(POSTER_PATH + movie.poster_path).into(binding.coverImageView)
-        viewModel.video(movie.id)
-        viewModel.videoList.observe(viewLifecycleOwner) {
-            binding.textViewLink.text = "$YOUTUBE_URL${it[0].key}"
-        }
+//        viewModel.video(movie.id)
+//        viewModel.videoList.observe(viewLifecycleOwner) {
+//            binding.textViewLink.text = "$YOUTUBE_URL${it[0].key}"
+//        }
 
 
     }

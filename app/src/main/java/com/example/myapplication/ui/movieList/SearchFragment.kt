@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSearchBinding
+import com.example.myapplication.model.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -48,19 +49,44 @@ class SearchFragment : Fragment() {
         viewModel.searchMovieList.observe(viewLifecycleOwner) {
             if (it != null) {
                 adapter.submitList(it)
+
+            } else {
+                var list =
+                    listOf(
+                        Movie(
+                            false,
+                            0,
+                            "",
+                            "",
+                            "",
+                            "",
+                            0.0,
+                            "",
+                            "",
+                            "",
+                            false,
+                            0.0,
+                            0
+                        )
+                    )
+
+                adapter.submitList(list)
             }
         }
-        binding.searchEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.searchMovie(binding.searchEditText.text.toString())
-            }
-        })
+        binding.search.setOnClickListener {
+            viewModel.searchMovie(binding.searchEditText.text.toString())
+        }
+//        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                viewModel.searchMovie(binding.searchEditText.text.toString())
+//            }
+//        })
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.movieList
 
 import android.app.Application
+import com.example.myapplication.data.ComingSoonDataBase.ComingSoonDataBase
 import com.example.myapplication.data.MovieLocalDataSource
 import com.example.myapplication.data.MovieRemoteDataSource
 import com.example.myapplication.data.MovieRepository
@@ -20,7 +21,7 @@ val appModule = module {
 
     single { MovieRepository(get(), get()) }
 
-    single { MovieLocalDataSource(get(),get()) }
+    single { MovieLocalDataSource(get()) }
 
     single { MovieRemoteDataSource(get()) }
 
@@ -44,8 +45,13 @@ val appModule = module {
     viewModel {
         MovieListViewModel(get())
     }
+
+
+
+
     single { MYDataBase.getAppDataBase(androidContext()) }
     single { get<MYDataBase>().movieDao() }
-    single { get<MYDataBase>().movieComingSoonDao() }
+    single { ComingSoonDataBase.getAppDataBase(androidContext()) }
+    single { get<ComingSoonDataBase>().comingSoonDao() }
 
 }

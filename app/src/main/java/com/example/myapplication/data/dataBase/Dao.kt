@@ -18,5 +18,18 @@ interface MovieDao {
     @Query("SELECT * FROM Movie")
     suspend fun getAll(): List<Movie>
 
+    @Query("SELECT * FROM Movie WHERE title = :title")
+    suspend fun findMovie(title:String):Movie?
+
+    @Query("SELECT * FROM Movie WHERE Classification = :ComingSoon")
+    suspend fun getComingSoon(ComingSoon:String = "ComingSoon"): List<Movie>
+
+    @Query("SELECT * FROM Movie WHERE Classification = :Popular")
+    suspend fun getPopular(Popular:String = "Popular"): List<Movie>
+
+    @Query("SELECT * FROM Movie WHERE id = :ID")
+    suspend fun getDetail(ID :Int): Movie
+
+
 
 }

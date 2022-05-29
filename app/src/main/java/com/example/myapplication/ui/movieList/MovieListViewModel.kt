@@ -1,39 +1,24 @@
 package com.example.myapplication.ui.movieList
 
-import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.myapplication.data.MovieRepository
 import com.example.myapplication.data.ResultVideo
 import com.example.myapplication.model.Movie
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.net.SocketTimeoutException
 
 
 class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
 
-
-    // private val context = getApplication<Application>().applicationContext
     val status = MutableLiveData<ApiStatus>()
     val movieList = MutableLiveData<List<Movie>>()
     val comingSoonMovieList = MutableLiveData<List<Movie>>()
-    val searchMovieList = MutableLiveData<List<Movie>>()
+    val searchMovieList = MutableLiveData<List<Movie?>>()
     val movieLiveData = MutableLiveData<Movie>()
     val videoList = MutableLiveData<List<ResultVideo>>()
 
 
     init {
-        //getMovieFromDB()
-        //getMovie()
-       // comingSoonMovie()
-        //setInformation()
         setInformation()
         setMovieInforamtion()
         setComingSoonInformation()
@@ -68,6 +53,7 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
             }
         }
     }
+
     fun setComingSoonInformation() {
         viewModelScope.launch {
             try {
@@ -77,6 +63,7 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
             }
         }
     }
+
     fun setComingSoonMovieInforamtion() {
         viewModelScope.launch {
             try {
@@ -111,16 +98,27 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         }
     }
 
+    fun searchMovieFromDB(title: String) {
+        viewModelScope.launch {
+            movieRepository.searchMovieFromDB(title)
+            val list = movieRepository.searchMovieFromDB(title)
+            searchMovieList.value = listOf(list)
+        }
+    }
+
     fun searchMovie(query: String) {
         status.value = ApiStatus.Loading
         viewModelScope.launch {
+            var list = listOf<Movie?>()
             try {
-                val list = movieRepository.searchMovie(query)
+                list = movieRepository.searchMovie(query)
                 searchMovieList.value = list
+
             } catch (e: Exception) {
-                val list =
-                    listOf(Movie(false, 0, "", "", "", "", 0.0, "", "", "", false, 0.0, 0))
-                movieList.value = list
+                var movie = movieRepository.searchMovieFromDB(query)
+                list = listOf(movie)
+                searchMovieList.value = list
+
             }
         }
     }
@@ -140,7 +138,8 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
                 val movie = movieRepository.movieDetail(id)
                 movieLiveData.value = movie
             } catch (e: Exception) {
-
+                val movie = movieRepository.getDetail(id)
+                movieLiveData.value = movie
             }
         }
     }
@@ -151,28 +150,5 @@ class MovieListViewModel(val movieRepository: MovieRepository) : ViewModel() {
         Error
     }
 
-//    private fun checkForInternet(context: Context): Boolean {
-//
-//        val connectivityManager =
-//            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//
-//            val network = connectivityManager.activeNetwork ?: return false
-//
-//            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-//
-//            return when {
-//                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-//                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-//                else -> false
-//            }
-//        } else {
-//            @Suppress("DEPRECATION") val networkInfo =
-//                connectivityManager.activeNetworkInfo ?: return false
-//            @Suppress("DEPRECATION")
-//            return networkInfo.isConnected
-//        }
-//    }
 
 }
